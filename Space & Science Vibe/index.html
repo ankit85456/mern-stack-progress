@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quantum Task & Focus Dashboard - A sleek, premium productivity hub combining task management, a focus timer, and a quick calculator.">
+    <title>Quantum Task & Focus Dashboard</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-backdrop"></div>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-main">
+                <h1 id="dashboard-title">Quantum Focus</h1>
+                <p id="dashboard-subtitle">Optimize your workflow, one session at a time.</p>
+            </div>
+            <div class="header-status">
+                <div class="status-clock" id="current-time">00:00:00</div>
+                <div class="status-date" id="current-date">Loading date...</div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <main class="dashboard-grid">
+            
+            <!-- Section 1: Task Planner -->
+            <section class="widget tasks-widget" aria-labelledby="tasks-heading">
+                <div class="widget-header">
+                    <div class="widget-title-area">
+                        <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h2 id="tasks-heading">Task Planner</h2>
+                    </div>
+                    <span class="badge" id="task-count">0 Active</span>
+                </div>
+                
+                <div class="widget-body">
+                    <!-- Task Input Form -->
+                    <form id="task-form" class="task-form-container">
+                        <div class="input-group">
+                            <input type="text" id="task-input" placeholder="What is your next focus?" autocomplete="off" required>
+                            <select id="task-priority" aria-label="Task Priority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                            <button type="submit" id="add-task-btn" aria-label="Add Task">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="12" y1="5" x2="12" y2="19" stroke-linecap="round"/>
+                                    <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Filter Options -->
+                    <div class="task-filters">
+                        <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+                        <button class="filter-btn" data-filter="active" id="filter-active">Active</button>
+                        <button class="filter-btn" data-filter="completed" id="filter-completed">Completed</button>
+                    </div>
+
+                    <!-- Task List -->
+                    <div class="tasks-scroll-container">
+                        <ul id="tasks-list" class="tasks-list">
+                            <!-- Tasks injected via JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="widget-footer">
+                    <button id="clear-completed-btn" class="text-btn">Clear Completed</button>
+                </div>
+            </section>
+
+            <!-- Section 2: Focus Timer -->
+            <section class="widget timer-widget" aria-labelledby="timer-heading">
+                <div class="widget-header">
+                    <div class="widget-title-area">
+                        <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <h2 id="timer-heading">Focus Timer</h2>
+                    </div>
+                    <span class="badge timer-badge" id="timer-state-label">Interval</span>
+                </div>
+
+                <div class="widget-body flex-center">
+                    <!-- Preset Selectors -->
+                    <div class="timer-modes">
+                        <button class="mode-btn active" data-duration="1500" id="mode-pomodoro">Pomodoro</button>
+                        <button class="mode-btn" data-duration="300" id="mode-short">Short Break</button>
+                        <button class="mode-btn" data-duration="900" id="mode-long">Long Break</button>
+                    </div>
+
+                    <!-- Circular Progress and Timer Display -->
+                    <div class="timer-visual-container">
+                        <svg class="progress-ring" width="220" height="220">
+                            <circle class="progress-ring-bg" stroke="rgba(255, 255, 255, 0.05)" stroke-width="8" fill="transparent" r="96" cx="110" cy="110"/>
+                            <circle class="progress-ring-bar" stroke="var(--accent-glow)" stroke-width="8" fill="transparent" r="96" cx="110" cy="110"/>
+                        </svg>
+                        <div class="timer-time-display" id="timer-display">25:00</div>
+                    </div>
+
+                    <!-- Timer Controls -->
+                    <div class="timer-controls">
+                        <button id="timer-play-btn" class="control-btn play-btn" aria-label="Start Timer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </button>
+                        <button id="timer-pause-btn" class="control-btn pause-btn hidden" aria-label="Pause Timer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="4" width="4" height="16" rx="1"/>
+                                <rect x="14" y="4" width="4" height="16" rx="1"/>
+                            </svg>
+                        </button>
+                        <button id="timer-reset-btn" class="control-btn secondary-btn" aria-label="Reset Timer">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="widget-footer">
+                    <span id="session-counter">Completed sessions: 0</span>
+                </div>
+            </section>
+
+            <!-- Section 3: Quick Calculator -->
+            <section class="widget calculator-widget" aria-labelledby="calc-heading">
+                <div class="widget-header">
+                    <div class="widget-title-area">
+                        <svg class="widget-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                            <line x1="8" y1="6" x2="16" y2="6"/>
+                            <line x1="16" y1="14" x2="16" y2="18"/>
+                            <circle cx="8" cy="10" r="1"/>
+                            <circle cx="12" cy="10" r="1"/>
+                            <circle cx="16" cy="10" r="1"/>
+                            <circle cx="8" cy="14" r="1"/>
+                            <circle cx="12" cy="14" r="1"/>
+                            <circle cx="8" cy="18" r="1"/>
+                            <circle cx="12" cy="18" r="1"/>
+                        </svg>
+                        <h2 id="calc-heading">Quantum Calc</h2>
+                    </div>
+                    <span class="badge calc-badge">Utility</span>
+                </div>
+
+                <div class="widget-body">
+                    <!-- Calculator Display -->
+                    <div class="calculator-display-container">
+                        <div class="calc-expression" id="calc-expression">&nbsp;</div>
+                        <input type="text" id="calc-display" class="calc-input" placeholder="0" readonly>
+                    </div>
+
+                    <!-- Calculator Keyboard Grid -->
+                    <div class="calc-grid">
+                        <button class="calc-btn utility" id="calc-clear">C</button>
+                        <button class="calc-btn utility" id="calc-backspace">⌫</button>
+                        <button class="calc-btn operator" data-val="/">/</button>
+                        <button class="calc-btn operator" data-val="*">×</button>
+
+                        <button class="calc-btn number" data-val="7">7</button>
+                        <button class="calc-btn number" data-val="8">8</button>
+                        <button class="calc-btn number" data-val="9">9</button>
+                        <button class="calc-btn operator" data-val="-">-</button>
+
+                        <button class="calc-btn number" data-val="4">4</button>
+                        <button class="calc-btn number" data-val="5">5</button>
+                        <button class="calc-btn number" data-val="6">6</button>
+                        <button class="calc-btn operator" data-val="+">+</button>
+
+                        <button class="calc-btn number" data-val="1">1</button>
+                        <button class="calc-btn number" data-val="2">2</button>
+                        <button class="calc-btn number" data-val="3">3</button>
+                        <button class="calc-btn equals" id="calc-equals">=</button>
+
+                        <button class="calc-btn number col-span-2" data-val="0">0</button>
+                        <button class="calc-btn number" data-val=".">.</button>
+                    </div>
+                </div>
+
+                <div class="widget-footer">
+                    <span>Quick utility calculations</span>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Quantum Focus Dashboard. Crafted for focus and speed.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
