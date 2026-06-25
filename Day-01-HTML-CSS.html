@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit Kumar | Portfolio</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header{
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav a{
+            color: white;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        section{
+            padding: 20px;
+        }
+
+        h2{
+            color: #333;
+        }
+
+        form input,
+        form textarea{
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        button{
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        footer{
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Ankit Kumar</h1>
+    <p>B.Tech CSE Student | Web Developer | Cloud Enthusiast</p>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>
+        I am Ankit Kumar, a B.Tech Computer Science student at
+        Lovely Professional University. I am passionate about
+        Web Development, Cloud Computing and Software Development.
+    </p>
+</section>
+
+<section id="skills">
+    <h2>Skills</h2>
+
+    <ul>
+        <li>C++</li>
+        <li>Java</li>
+        <li>JavaScript</li>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>React.js</li>
+        <li>Node.js</li>
+        <li>MongoDB</li>
+        <li>AWS Cloud</li>
+    </ul>
+</section>
+
+<section id="education">
+    <h2>Education</h2>
+
+    <p>
+        <b>B.Tech CSE</b> -
+        Lovely Professional University (2023-2027)
+    </p>
+
+    <p>
+        <b>B.Sc Mathematics</b> (2020-2023)
+    </p>
+</section>
+
+<section id="projects">
+
+    <section id="projects">
+    <h2>Projects</h2>
+
+    <h3>Azure Cloud Upload Dashboard</h3>
+    <p>
+        Developed a cloud-based file management system using
+        Azure Blob Storage, React.js, Node.js and Express.js.
+        Users can upload, view and manage files securely.
+        Implemented cloud storage integration, file handling,
+        responsive UI and environment variable configuration
+        for secure access to Azure services.
+    </p>
+
+    <h3>Multi Vendor E-Commerce Store</h3>
+    <p>
+        Built a full-stack MERN application that allows multiple
+        vendors to manage and sell products online. Features
+        include user authentication, product management,
+        shopping cart, order processing and MongoDB database
+        integration. The project demonstrates complete
+        frontend and backend development skills.
+    </p>
+
+    <h3>Smart Nutrition Tracker</h3>
+    <p>
+        Designed a health and nutrition tracking application
+        that helps users monitor daily food intake, calories,
+        nutrients and health goals. Developed using modern web
+        technologies with an easy-to-use interface and data
+        management system for tracking nutrition progress.
+    </p>
+
+    <h3>WordPress Website on AWS</h3>
+    <p>
+        Deployed a WordPress website on Amazon Web Services
+        using EC2, RDS and S3. Configured cloud infrastructure,
+        managed virtual servers and implemented secure storage
+        solutions. This project provided hands-on experience
+        with AWS cloud services and deployment practices.
+    </p>
+</section>
+</section>
+
+<section id="contact">
+    <h2>Send Me a Message</h2>
+
+    <form id="contact-form">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter Your Name"
+            required
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter Your Email"
+            required
+        >
+
+        <textarea
+            id="message"
+            rows="6"
+            placeholder="Type Your Message Here..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Send Message
+        </button>
+
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 Ankit Kumar | All Rights Reserved</p>
+</footer>
+
+<!-- EmailJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+
+emailjs.init("YOUR_PUBLIC_KEY");
+
+document
+.getElementById("contact-form")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        {
+            from_name:
+            document.getElementById("name").value,
+
+            from_email:
+            document.getElementById("email").value,
+
+            message:
+            document.getElementById("message").value
+        }
+    )
+
+    .then(function(){
+
+        alert("Message Sent Successfully!");
+
+        document
+        .getElementById("contact-form")
+        .reset();
+
+    })
+
+    .catch(function(error){
+
+        alert("Error Sending Message");
+
+        console.log(error);
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
