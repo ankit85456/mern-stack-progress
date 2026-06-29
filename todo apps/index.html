@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="topbar">
+        <div>
+            <h1>📝 ToDo App</h1>
+            <p class="subtitle">Save tasks, search quickly, and stay productive.</p>
+        </div>
+        <button id="themeToggle" type="button">🌙 Dark Mode</button>
+    </header>
+
+    <div class="input-box">
+        <input type="text" id="search" placeholder="Search todos..." autocomplete="off">
+        <input type="text" id="title" placeholder="Enter Title" autocomplete="off">
+        <textarea id="description" placeholder="Enter Description"></textarea>
+        <button id="submitBtn" type="button" onclick="handleSubmit()">Add Todo</button>
+    </div>
+
+    <div id="todoList" class="todo-grid"></div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
